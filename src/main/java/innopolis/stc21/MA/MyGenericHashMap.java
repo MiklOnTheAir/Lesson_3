@@ -7,25 +7,25 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
     /**
      * Default capacity for MyGenericHashMap
      */
-    static final int DEFAULT_CAPACITY = 16;
+    private static final int DEFAULT_CAPACITY = 16;
     /**
      * Default load factor for MyGenericHashMap
      */
-    static final float DEFAULT_LOAD_FACTOR = 0.75F;
+    private static final float DEFAULT_LOAD_FACTOR = 0.75F;
     /**
      * Maximum size of nodes array
      */
-    static final int MAX_CAPACITY = Integer.MAX_VALUE;
+    private static final int MAX_CAPACITY = Integer.MAX_VALUE;
 
     /**
      * Class for storing key-value pairs
      */
-    static class Node<K, V> implements Map.Entry<K,V>{
+    private static class Node<K, V> implements Map.Entry<K,V>{
 
-        final int hash;
-        final K key;
-        V value;
-        Node<K, V> next;
+        private final int hash;
+        private final K key;
+        private V value;
+        private Node<K, V> next;
 
         Node(int hash, K key, V value, Node<K, V> next) {
             this.hash = hash;
@@ -34,7 +34,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
             this.next = next;
         }
 
-        public int getHash() {
+        int getHash() {
             return hash;
         }
 
@@ -108,7 +108,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
      */
     private Node<K, V>[] Nodes;
 
-    public MyGenericHashMap() {
+    MyGenericHashMap() {
         this.capacity = DEFAULT_CAPACITY;
         this.loadFactor = DEFAULT_LOAD_FACTOR;
         this.size = 0;
@@ -122,7 +122,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
      * @param loadFactor default value is 0.75f
      * @throws IllegalArgumentException if capacity or loadFactor is nonpositive
      */
-    public MyGenericHashMap(int capacity, float loadFactor) {
+    MyGenericHashMap(int capacity, float loadFactor) {
         if (capacity <= 0) {
             throw new IllegalArgumentException("capacity is nonpositive");
         }
@@ -143,7 +143,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
      * Constructor from another Map
      * @param m map
      */
-    public MyGenericHashMap(Map<? extends K, ? extends V> m){
+    MyGenericHashMap(Map<? extends K, ? extends V> m){
         this();
         putAll(m);
     }
@@ -154,7 +154,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
      * @param key Key of Node
      * @return hash for Node
      */
-    final static int hash(Object key) {
+    private final static int hash(Object key) {
         int hash = 0;
         if (key != null) {
             hash = (hash = key.hashCode()) ^ (hash >>> 16);
@@ -167,7 +167,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
      *
      * @param hash source for calculate index
      */
-    final int index(int hash) {
+    private final int index(int hash) {
         int length = this.Nodes.length;
         if (length <= 0) {
             throw new ArrayIndexOutOfBoundsException(length);
@@ -185,7 +185,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
      * @param key  key of the sought Node
      * @return found Node or null
      */
-    final Node<K, V> getNode(int hash, Object key) {
+    private final Node<K, V> getNode(int hash, Object key) {
         Node current = this.Nodes[this.index(hash)];
         while (current != null) {
             if (current.getHash() == hash && ((current.getKey() != null && current.getKey().equals(key)) || key == null)) {
@@ -204,7 +204,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
      * @param onlyIfAbsent replacement value if absent
      * @return New value if Node not exist or @onlyIfAbsent = false or old value if Node exist and @onlyIfAbsent = true
      */
-    final V putVal(int hash, K key, V value, boolean onlyIfAbsent) {
+    private final V putVal(int hash, K key, V value, boolean onlyIfAbsent) {
         Node<K, V> current = this.getNode(hash, key);
         if (current != null) {
             if (!onlyIfAbsent) {
@@ -227,7 +227,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
      * @param key Key of Node
      * @return Еhe node that was deleted
      */
-    final Node<K, V> removeNode(Object key) {
+    private final Node<K, V> removeNode(Object key) {
         int hash = hash(key);
         int index = this.index(hash);
         Node<K, V> parent = null;
@@ -251,7 +251,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
     /**
      * Resize MyGenericHashMap. Doubling the size of the internal array
      */
-    final void resize() {
+    private final void resize() {
         this.capacity = (this.capacity < (MAX_CAPACITY >> 1))
                 ? this.capacity << 1
                 : MAX_CAPACITY;
