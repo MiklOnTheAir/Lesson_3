@@ -219,61 +219,8 @@ public class MyGenericHashMapTest {
         Set<Map.Entry<Integer, Integer>> entries = myHashMap.entrySet();
         assertEquals(200, entries.size());
 
-        class TestEntry<K, V> implements Map.Entry<K, V> {
-
-            K key;
-            V value;
-
-            TestEntry(K key, V value) {
-                this.key = key;
-                this.value = value;
-            }
-
-            @Override
-            public K getKey() {
-                return key;
-            }
-
-            @Override
-            public V getValue() {
-                return value;
-            }
-
-            @Override
-            public final V setValue(V newValue) {
-                V oldValue = this.value;
-                this.value = newValue;
-                return oldValue;
-            }
-
-            @Override
-            public final int hashCode() {
-                return Objects.hashCode(key) ^ Objects.hashCode(value);
-            }
-
-            @Override
-            public final boolean equals(Object o) {
-                if (this == o) {
-                    return true;
-                }
-                if (o instanceof Map.Entry) {
-                    Map.Entry<?, ?> node = (Map.Entry<?, ?>) o;
-                    if (Objects.equals(this.getKey(), node.getKey()) &&
-                            Objects.equals(this.getValue(), node.getValue())) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-
-            @Override
-            public final String toString() {
-                return this.getKey() + "=" + this.getValue();
-            }
-        }
-
         for (Integer i = 0; i < 200; i++) {
-            TestEntry<Integer, Integer> testEntry = new TestEntry<>(i, i);
+            Map.Entry<Integer, Integer> testEntry = new AbstractMap.SimpleEntry<>(i, i);
             assertTrue(entries.contains(testEntry));
         }
     }
