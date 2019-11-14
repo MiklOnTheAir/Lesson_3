@@ -102,9 +102,6 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
         if (loadFactor <= 0 || Float.isNaN(loadFactor)) {
             throw new IllegalArgumentException("loadFactor is nonpositive");
         }
-        if (capacity > MAX_CAPACITY) {
-            capacity = MAX_CAPACITY;
-        }
 
         this.capacity = capacity;
         this.loadFactor = loadFactor;
@@ -174,7 +171,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
         Node<K, V> newNode = new Node<K, V>(hash, key, value, Nodes[index]);
         Nodes[index] = newNode;
         this.size++;
-        if (size > capacity * loadFactor && capacity < MAX_CAPACITY) {
+        if (size > capacity * loadFactor) {
             this.resize();
         }
         return value;
@@ -280,7 +277,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
         int mapSize = m.size();
-        if (((mapSize + this.size()) * this.loadFactor) > this.capacity && this.size() < MAX_CAPACITY) {
+        if (((mapSize + this.size()) * this.loadFactor) > this.capacity) {
             this.resize();
         }
         for (Map.Entry<? extends K, ? extends V> entry : m.entrySet()) {
