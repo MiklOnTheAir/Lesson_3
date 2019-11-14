@@ -4,17 +4,8 @@ import java.util.*;
 
 public class MyGenericHashMap<K, V> implements Map<K, V> {
 
-    /**
-     * Default capacity for MyGenericHashMap
-     */
     private static final int DEFAULT_CAPACITY = 16;
-    /**
-     * Default load factor for MyGenericHashMap
-     */
     private static final float DEFAULT_LOAD_FACTOR = 0.75F;
-    /**
-     * Maximum size of nodes array
-     */
     private static final int MAX_CAPACITY = Integer.MAX_VALUE;
 
     /**
@@ -91,21 +82,10 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
         }
     }
 
-    /**
-     * Current capacity of MyGenericHashMap
-     */
+
     private int capacity;
-    /**
-     * Load Factor of MyGenericHashMap
-     */
     private float loadFactor;
-    /**
-     * Count of key-value pairs
-     */
     private int size;
-    /**
-     * Array of key-value pairs.
-     */
     private Node<K, V>[] Nodes;
 
     MyGenericHashMap() {
@@ -115,13 +95,6 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
         this.Nodes = new Node[DEFAULT_CAPACITY];
     }
 
-    /**
-     * Constructor with custom capacity and loadFactor
-     *
-     * @param capacity   default value is 16
-     * @param loadFactor default value is 0.75f
-     * @throws IllegalArgumentException if capacity or loadFactor is nonpositive
-     */
     MyGenericHashMap(int capacity, float loadFactor) {
         if (capacity <= 0) {
             throw new IllegalArgumentException("capacity is nonpositive");
@@ -139,21 +112,11 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
         this.Nodes = new Node[capacity];
     }
 
-    /**
-     * Constructor from another Map
-     * @param m map
-     */
     MyGenericHashMap(Map<? extends K, ? extends V> m){
         this();
         putAll(m);
     }
 
-    /**
-     * Calculate hash from key
-     *
-     * @param key Key of Node
-     * @return hash for Node
-     */
     private final static int hash(Object key) {
         int hash = 0;
         if (key != null) {
@@ -162,11 +125,6 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
         return Math.abs(hash);
     }
 
-    /**
-     * Calculate index
-     *
-     * @param hash source for calculate index
-     */
     private final int index(int hash) {
         int length = this.Nodes.length;
         if (length <= 0) {
