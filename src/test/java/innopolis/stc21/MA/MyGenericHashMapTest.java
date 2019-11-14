@@ -11,18 +11,17 @@ public class MyGenericHashMapTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void MyHashMapNegativeLoadFactor() {
-        MyGenericHashMap<Integer, Integer> myHashMap = new MyGenericHashMap<>(10, -0.1f);
+        new MyGenericHashMap<Integer, Integer>(10, -0.1f);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void MyHashMapNegativeCapacity() {
-        MyGenericHashMap<Integer, Integer> myHashMap = new MyGenericHashMap<>(-10, 0.1f);
+        new MyGenericHashMap<Integer, Integer>(-10, 0.1f);
     }
 
     @org.junit.Test
     public void size() {
-        MyGenericHashMap<Integer, Integer> myHashMapCustom = new MyGenericHashMap<>(100, 0.50f);
-        assertEquals(0, myHashMapCustom.size());
+        assertEquals(0, new MyGenericHashMap<Integer, Integer>(100, 0.50f).size());
 
         MyGenericHashMap<Integer, Integer> myHashMapDefault = new MyGenericHashMap<>();
         assertEquals(0, myHashMapDefault.size());

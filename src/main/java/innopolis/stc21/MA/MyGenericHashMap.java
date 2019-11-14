@@ -11,7 +11,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
     /**
      * Class for storing key-value pairs
      */
-    private static class Node<K, V> implements Map.Entry<K,V>{
+    private static class Node<K, V> implements Map.Entry<K, V> {
 
         private final int hash;
         private final K key;
@@ -50,7 +50,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
             return oldValue;
         }
 
-        final Node<K, V> setNext(Node<K, V> newNext) {
+        private final Node<K, V> setNext(Node<K, V> newNext) {
             Node<K, V> oldNext = this.next;
             this.next = newNext;
             return oldNext;
@@ -68,10 +68,8 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
             }
             if (o instanceof Map.Entry) {
                 Map.Entry<?, ?> node = (Map.Entry<?, ?>) o;
-                if (Objects.equals(this.getKey(), node.getKey()) &&
-                        Objects.equals(this.getValue(), node.getValue())) {
-                    return true;
-                }
+                return Objects.equals(this.getKey(), node.getKey()) &&
+                        Objects.equals(this.getValue(), node.getValue());
             }
             return false;
         }
@@ -109,7 +107,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
         this.Nodes = new Node[capacity];
     }
 
-    MyGenericHashMap(Map<? extends K, ? extends V> m){
+    MyGenericHashMap(Map<? extends K, ? extends V> m) {
         this();
         putAll(m);
     }
@@ -153,9 +151,10 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
 
     /**
      * Internal put value in Map with replacement values if necessary
-     * @param hash Hash of Node
-     * @param key Key of Node
-     * @param value New Value of Node
+     *
+     * @param hash         Hash of Node
+     * @param key          Key of Node
+     * @param value        New Value of Node
      * @param onlyIfAbsent replacement value if absent
      * @return New value if Node not exist or @onlyIfAbsent = false or old value if Node exist and @onlyIfAbsent = true
      */
@@ -179,6 +178,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
 
     /**
      * Internal remove Node
+     *
      * @param key Key of Node
      * @return Еhe node that was deleted
      */
@@ -213,8 +213,8 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
         this.size = 0;
         Node<K, V>[] oldNodes = this.Nodes;
         this.Nodes = (Node<K, V>[]) new Node[this.capacity];
-        for (int i = 0; i < oldNodes.length; i++) {
-            Node<K, V> current = oldNodes[i];
+        for (Node<K, V> oldNode : oldNodes) {
+            Node<K, V> current = oldNode;
             while (current != null) {
                 this.put(current.getKey(), current.getValue());
                 current = current.getNext();
@@ -240,10 +240,10 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean containsValue(Object value) {
-        for (int i = 0; i < Nodes.length; i++) {
-            Node<K, V> current = Nodes[i];
+        for (Node<K, V> node : Nodes) {
+            Node<K, V> current = node;
             while (current != null) {
-                if(Objects.equals(value, current.getValue())){
+                if (Objects.equals(value, current.getValue())) {
                     return true;
                 }
                 current = current.getNext();
@@ -298,8 +298,8 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
     @Override
     public Set<K> keySet() {
         Set<K> keys = new HashSet<>();
-        for (int i = 0; i < Nodes.length; i++) {
-            Node<K, V> current = Nodes[i];
+        for (Node<K, V> node : Nodes) {
+            Node<K, V> current = node;
             while (current != null) {
                 keys.add(current.getKey());
                 current = current.getNext();
@@ -311,9 +311,9 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
 
     @Override
     public Collection<V> values() {
-       Collection<V> collectionValues = new ArrayList<>();
-        for (int i = 0; i < Nodes.length; i++) {
-            Node<K, V> current = Nodes[i];
+        Collection<V> collectionValues = new ArrayList<>();
+        for (Node<K, V> node : Nodes) {
+            Node<K, V> current = node;
             while (current != null) {
                 collectionValues.add(current.getValue());
                 current = current.getNext();
@@ -325,10 +325,10 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
     @Override
     public Set<Entry<K, V>> entrySet() {
         Set<Entry<K, V>> entries = new HashSet<>();
-        for (int i = 0; i < Nodes.length; i++) {
-            Node<K, V> current = Nodes[i];
+        for (Node<K, V> node : Nodes) {
+            Node<K, V> current = node;
             while (current != null) {
-                entries.add(new AbstractMap.SimpleEntry<K, V>(current.getKey(),current.getValue()));
+                entries.add(new AbstractMap.SimpleEntry<K, V>(current.getKey(), current.getValue()));
                 current = current.getNext();
             }
         }
