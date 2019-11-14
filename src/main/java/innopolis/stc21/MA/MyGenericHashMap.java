@@ -328,7 +328,7 @@ public class MyGenericHashMap<K, V> implements Map<K, V> {
         for (int i = 0; i < Nodes.length; i++) {
             Node<K, V> current = Nodes[i];
             while (current != null) {
-                entries.add(current);
+                entries.add(new AbstractMap.SimpleEntry<K, V>(current.getKey(),current.getValue()));
                 current = current.getNext();
             }
         }
